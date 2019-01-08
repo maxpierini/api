@@ -308,7 +308,12 @@ class API(object):
             'comment_text': commentText
         })
         return self.SendRequest('media/' + str(mediaId) + '/comment/', self.generateSignature(data))
-
+    
+    def reply_to_comment(self, media_id, comment_text, parent_comment_id):
+        data = self.json_data({'comment_text': comment_text, 'replied_to_comment_id': parent_comment_id})
+        url = 'media/{media_id}/comment/'.format(media_id=media_id)
+        return self.send_request(url, data)
+    
     def deleteComment(self, mediaId, commentId):
         data = json.dumps({
             '_uuid': self.uuid,
